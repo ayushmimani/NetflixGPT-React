@@ -1,11 +1,6 @@
-import "./App.css";
-
+import Body from "./components/Body";
 function App() {
-  return (
-    <div className="App">
-      <h1 className="text-2xl font-bold text-yellow-300">namaste react</h1>
-    </div>
-  );
+  return <Body />;
 }
 
 export default App;
