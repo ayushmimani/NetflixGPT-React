@@ -79,3 +79,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 - for build react project run => npm run build
 - for deploy on firebase run => firebase deploy
   url => https://netflixgpt-react-c886d.web.app/
+
+- In login logic is written to to sign up and sign in
+  when user user signup then updateprofile is invoked it is part of firebase api to add display name and photourl
+
+- And in body component any thing happen like signin and signout then user data is destructured into uid,email,displayname,photourl
+  and put into store of redux user

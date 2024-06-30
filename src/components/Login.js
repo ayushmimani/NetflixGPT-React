@@ -5,15 +5,20 @@ import { auth } from "../utils/Firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { adduser } from "../utils/userSlice";
 
 const Login = () => {
   const [issigninform, setissigninform] = useState(true);
   const [errormessage, seterrmessage] = useState(null);
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const email = useRef(null);
   const password = useRef(null);
-  //const fullname = useRef(null);
+  const fullname = useRef(null);
 
   const toggleSignInForm = () => {
     setissigninform(!issigninform);
@@ -23,8 +28,8 @@ const Login = () => {
     const message = validatedata(
       // fullname.current.value,
       email.current.value,
-      password.current.value
-      // issigninform ? null : fullname.current.value
+      password.current.value,
+      issigninform ? null : fullname.current.value
     );
     seterrmessage(message);
     // if string get then return from the function to not executed further code
@@ -40,6 +45,8 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
+          console.log("signin - " + user);
+          navigate("/browse");
           // ...
         })
         .catch((error) => {
@@ -57,7 +64,23 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          // ...
+          updateProfile(user, {
+            displayName: fullname.current.value,
+            photoURL: "https://avatars.githubusercontent.com/u/70365571?v=4",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                adduser({
+                  uid: uid,
+                  displayName: displayName,
+                  email: email,
+                  photoURL: photoURL,
+                })
+              );
+              navigate("/browse");
+            })
+            .catch((error) => {});
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -89,7 +112,7 @@ const Login = () => {
         {/* Full Name input field for signup form*/}
         {!issigninform && (
           <input
-            // ref={fullname}
+            ref={fullname}
             type="text"
             placeholder="Full Name"
             className="p-4 my-4 w-full bg-gray-700"
