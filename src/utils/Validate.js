@@ -9,7 +9,7 @@ export const validatedata = (email, password, fullname) => {
     /(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/.test(
       fullname
     );
-  if (!isFullNameValid) return "Full Name is not valid";
+  if (!isFullNameValid) return null;
   if (!isEmailValid) return "Email is not valid";
   if (!isPasswordValid) return "Password is not valid";
   return null;
