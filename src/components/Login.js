@@ -10,6 +10,7 @@ import {
 
 import { useDispatch } from "react-redux";
 import { adduser } from "../utils/userSlice";
+import { USER_AVATAR } from "../utils/constant";
 
 const Login = () => {
   const [issigninform, setissigninform] = useState(true);
@@ -66,7 +67,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: fullname.current.value,
-            photoURL: "https://avatars.githubusercontent.com/u/70365571?v=4",
+            photoURL: USER_AVATAR,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
